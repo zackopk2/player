@@ -89,7 +89,7 @@ function msg_clear(){var msg = document.getElementById('messagem').innerHTML = '
 function status_code(){
   var url = document.getElementById('link').value;
   var msg = document.getElementById('messagem');
-  if (url.includes('.m3u8')==true){var xhr = new XMLHttpRequest();code = xhr.open('GET', url);xhr.onreadystatechange=function(){if(xhr.readyState==4){if (xhr.status == 200){document.getElementById('vvideo').style.display = "block";player_start(url)}else {msg.innerHTML = 'Erro '+xhr.status;console.log(xhr.status)}}};xhr.send()}else{msg.innerHTML ='link invalido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
+  if (url.includes('.m3u8')==true){var xhr = new XMLHttpRequest();code = xhr.open('GET', url);xhr.onreadystatechange=function(){if(xhr.readyState==4){if (xhr.status == 200){document.getElementById('vvideo').style.display = "block";player_start(url)}else {msg.innerHTML = 'OFFLINE STATUS'+xhr.status;console.log(xhr.status)}}};xhr.send()}else{msg.innerHTML ='link invalido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
 function player_start(url) {
     if (Hls.isSupported()) {status(url);const video = document.getElementById('video');const hls = new Hls ();hls.attachMedia(video);hls.on(Hls.Events.MEDIA_ATTACHED, function () {hls.loadSource(url);});}}
 </script>
