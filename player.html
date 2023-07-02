@@ -1,107 +1,64 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="pt">
 <head>
-  <title>FLV Player 2</title>
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init();</script>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Shading Player</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #FF69B4, #8B008B);
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-<meta charset="UTF-8">
-<meta name="referrer" content="no-referrer-when-downgrade">
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<style> 
-input[type=url] {border-radius: 4px;border: white;outline-style:solid;width: 90%;padding: 7px 10px;margin: 2px 0}
-.button {
-    width: 80;
-    margin: 8px 0;
-    background-color: black;
-    border: white;
-    outline-style:solid;
-    border-radius:1px;
-    color: white;
-    padding: 10px 50px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}
-.button1 {
-    width: 80;
-    margin: 8px 0;
-    background-color: black;
-    border: red;
-    outline-style:solid;
-    border-radius:1px;
-    color: white;
-    padding: 10px 50px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}
-.button:hover {
-      background-color:#066395;
-      transition: 0.7s;
-  }
-.button1:hover {
-      background-color:#066395;
-      transition: 0.7s;
-  }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
 
-video{
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
-h1 {
-  color: #e32636;
-}
-body {
-  background-color: black;
-}
-
-
-body {
-  margin: 0;
-  background-color: black;
-}
-.column {
-  width: 100%;
-}
-
-@media (min-width: 400px) {
-  .column {
-    width: 50%;
-  }
-}
-</style>
-
-
-
-
-
-
+    @media (min-width: 400px) {
+      .column {
+        width: 50%;
+      }
+    }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/flv.js@1.5.0/dist/flv.min.js"></script>
-</head>
-<body>
+<script>
 
-  <script>
-
-    function msg_clear(){var msg = document.getElementById('messagem').innerHTML = '';var inpu = document.getElementById('link').value = '';document.getElementById('video').style.display = "none"}
-
+function msg_clear(){var msg = document.getElementById('messagem').innerHTML = '';var inpu = document.getElementById('link').value = '';document.getElementById('vvideo').style.display = "none"}
 
 function status_code(){
-  var url = document.getElementById('link').value.replace(/^http:/, "https:");
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+
+  var url = urlParams.get('link').replace(/^http:/, "https:");
+
+  var data_name = urlParams.get('data_name');
+  if(url=='null') {url=document.getElementById('link').value;}
+  console.log(url, data_name);
+
+
   var msg = document.getElementById('messagem');
 
-  //if (url.includes('.flv')==true){player_start(url)}else{msg.innerHTML ='Link Inválido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
 
-
-
-  if (url.includes('.flv')==true){var xhr = new XMLHttpRequest();code = xhr.open('HEAD', url);xhr.onreadystatechange=function(){if(xhr.readyState==4){if (xhr.status == 200){player_start(url);}else {msg.innerHTML = 'OFFLINE STATUS ('+xhr.status+')';console.log(xhr.status)}}};xhr.send()}else{msg.innerHTML ='Link Inválido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
-
-
+  if (url.includes('.flv')==true){var xhr = new XMLHttpRequest();code = xhr.open('HEAD', url);xhr.onreadystatechange=function(){if(xhr.readyState==4){if (xhr.status == 200){document.getElementById('vvideo').style.display = "block";player_start(url);}else {msg.style.display="block";console.log(xhr.status)}}};xhr.send()}else{msg.innerHTML ='Link Inválido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
 
 function player_start(url) {
   document.getElementById('video').style.display = "block";
@@ -116,16 +73,49 @@ function player_start(url) {
         flvPlayer.play();
       }
     }
-
+    
   </script>
 
 
-    <center><h1>PLAYER</h1></center>
-  <center><text id="messagem" style="color:white"></text></center>
-  <center><input type="url" name="text" id="link" placeholder="https://example.com/live/playlist.m3u8!" onkeyup="status_code()" required></input>
-  <center><button class="button" onclick="status_code()">PLAY</button>&nbsp;&nbsp;
-    <button class="button1" onclick="msg_clear()">Clear</button></center>
-  <center><video id="video" style="display:none"></video></center>
+
+</head>
+<body onload="status_code()">
+  <div class="d-flex flex-column align-items-center justify-content-center bg-white rounded px-3">
+    <img src="/static/shade.jpg" class="rounded-circle m-4" alt="Imagem" style="width:8p0px; height:80px;" />
+    <h1 class="mb-4 mt-3" style="color:#8B008B;">SHADE</h1>
+    <div id="vvideo" style="display:none;">
+      <video id="video" controls autoplay></video>
+    </div>
+    <div class="form-group" id="form">
+      <div class="col-sm-10">
+        <input type="url" name="text" class="form-control form-control-lg mb-3 d-none" id="link" onchange="status_code()" required>
+        <a href="http://t.me/TheShading_bot" id="bt" class="btn btn-lg btn-primary" target="_blank">Abrir Telegram</a>
+
+       </div>
+    </div>
+    <div class="alert alert-danger" id="messagem" style="display:none;" role="alert">
+      <h3>Offline</h3>
+    </div>
+    <button id="play" class="btn btn-success btn-lg mb-3 d-none" onclick="status_code()">Play!</button>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/vendor/holder.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function () {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  var data_name = parseInt(urlParams.get('data_name'));
+  if (data_name !== 5) {
+    $("#play").removeClass("d-none");
+    $("#link").removeClass("d-none");
+    $("#bt").addClass("d-none");
+    $("#link").val(urlParams.get('link'));
+  }
+});
+</script>
 
 
 </body>
