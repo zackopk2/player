@@ -92,8 +92,7 @@ body {
 
 
 function status_code(){
-  var url = document.getElementById('link').value;
-  //.replace(/^http:/, "https:");
+  var url = document.getElementById('link').value.replace(/^http:/, "https:");
   var msg = document.getElementById('messagem');
 
   //if (url.includes('.flv')==true){player_start(url)}else{msg.innerHTML ='Link Inválido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
