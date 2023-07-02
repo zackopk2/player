@@ -93,7 +93,7 @@ body {
 function status_code(){
   var url = document.getElementById('link').value;
   var msg = document.getElementById('messagem');
-  if (url.includes('.flv')==true){var xhr = new XMLHttpRequest();code = xhr.open('HEAD', url);xhr.onreadystatechange=function(){if(xhr.readyState==4){if (xhr.status == 200){document.getElementById('video').style.display = "block";player_start(url)}else {msg.innerHTML = 'OFFLINE STATUS ('+xhr.status+')';console.log(xhr.status)}}};xhr.send()}else{msg.innerHTML ='Link Inválido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
+  if (url.includes('.flv')==true){var xhr = new XMLHttpRequest();code = xhr.open('GET', url);xhr.onreadystatechange=function(){if(xhr.readyState==8){if (xhr.status == 200){document.getElementById('video').style.display = "block";player_start(url)}else {msg.innerHTML = 'OFFLINE STATUS ('+xhr.status+')';console.log(xhr.status)}}};xhr.send()}else{msg.innerHTML ='Link Inválido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
 
 
 
