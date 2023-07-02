@@ -1,17 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>HTML5 Video Player</title>
+  <title>FLV Player</title>
+
+  <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style> 
+input[type=url] {border-radius: 4px;border: white;outline-style:solid;width: 90%;padding: 7px 10px;margin: 2px 0}
+.button {
+    width: 80;
+    margin: 8px 0;
+    background-color: black;
+    border: white;
+    outline-style:solid;
+    border-radius:1px;
+    color: white;
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.button1 {
+    width: 80;
+    margin: 8px 0;
+    background-color: black;
+    border: red;
+    outline-style:solid;
+    border-radius:1px;
+    color: white;
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.button:hover {
+      background-color:#066395;
+      transition: 0.7s;
+  }
+.button1:hover {
+      background-color:#066395;
+      transition: 0.7s;
+  }
+
+video{
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+h1 {
+  color: #e32636;
+}
+body {
+  background-color: black;
+}
+
+
+body {
+  margin: 0;
+  background-color: black;
+}
+.column {
+  width: 100%;
+}
+
+@media (min-width: 400px) {
+  .column {
+    width: 50%;
+  }
+}
+</style>
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/flv.js@1.5.0/dist/flv.min.js"></script>
 </head>
 <body>
-  <div>
-    <input type="text" id="videoInput" placeholder="Enter video URL">
-    <button onclick="playVideo()">Play</button>
-  </div>
-  <div>
-    <video id="videoPlayer" controls></video>
-  </div>
 
-  <script src="script.js"></script>
+  <script>
+
+    function msg_clear(){var msg = document.getElementById('messagem').innerHTML = '';var inpu = document.getElementById('link').value = '';document.getElementById('video').style.display = "none"}
+
+
+function status_code(){
+  var url = document.getElementById('link').value;
+  var msg = document.getElementById('messagem');
+  if (url.includes('.flv')==true){var xhr = new XMLHttpRequest();code = xhr.open('HEAD', url);xhr.onreadystatechange=function(){if(xhr.readyState==4){if (xhr.status == 200){document.getElementById('video').style.display = "block";player_start(url)}else {msg.innerHTML = 'OFFLINE STATUS ('+xhr.status+')';console.log(xhr.status)}}};xhr.send()}else{msg.innerHTML ='Link Inválido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
+
+
+
+function player_start(url) {
+      if (flvjs.isSupported()) {
+        var videoElement = document.getElementById('video');
+        var flvPlayer = flvjs.createPlayer({
+          type: 'flv',
+          url: url
+        });
+        flvPlayer.attachMediaElement(videoElement);
+        flvPlayer.load();
+        flvPlayer.play();
+      }
+    }
+
+  </script>
+
+
+    <center><h1>PLAYER</h1></center>
+  <center><text id="messagem" style="color:white"></text></center>
+  <center><input type="url" name="text" id="link" placeholder="https://example.com/live/playlist.m3u8!" onkeyup="status_code()" required></input>
+  <center><button class="button" onclick="status_code()">PLAY</button>&nbsp;&nbsp;
+    <button class="button1" onclick="msg_clear()">Clear</button></center>
+  <center><video id="video" controls autoplay class="videoCentered" style="display:none"></video></center>
+
+
 </body>
 </html>
