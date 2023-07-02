@@ -4,7 +4,6 @@
   <title>FLV Player</title>
 
   <meta charset="UTF-8">
-    <meta name="referrer" content="78373fa444d18cf962d99179d6621a64">
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <style> 
 input[type=url] {border-radius: 4px;border: white;outline-style:solid;width: 90%;padding: 7px 10px;margin: 2px 0}
@@ -104,6 +103,7 @@ function status_code(){
 
 
 function player_start(url) {
+  document.getElementById('video').style.display = "block";
       if (flvjs.isSupported()) {
         var videoElement = document.getElementById('video');
         var flvPlayer = flvjs.createPlayer({
